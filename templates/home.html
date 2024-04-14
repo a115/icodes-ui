@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>Home page</title>
+    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="mainContainer">
+      <h1>
+        <a href="{{ url_for('read_item', id=id) }}">Item ID: {{ id }}</a>
+      </h1>
+      <button onclick="goToAnotherPage()">Go to another page</button>
+    </div>
+    <script>
+        function goToAnotherPage() {
+            window.location.href = "{{ url_for('get_another_page') }}";
+        }
+    </script>
+  </body>
+</html>

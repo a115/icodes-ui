@@ -1,19 +1,24 @@
-<html>
-  <head>
-    <title>Home page</title>
-    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet" />
-  </head>
-  <body>
-    <div class="mainContainer">
-      <h1>
-        <a href="{{ url_for('read_item', id=id) }}">Item ID: {{ id }}</a>
-      </h1>
-      <button onclick="goToAnotherPage()">Go to another page</button>
+{% extends "base.html" %}
+{% block title %} Home page {% endblock %}
+{% block content %}
+    <body>
+    <div class="d-flex flex-column align-items-center justify-content-center">
+        <h1>Welcome to iCODES</h1>
+        <div>
+            <h3>
+                List your repositories
+            </h3>
+        </div>
+        <button onclick="getRepos()" type="button" class="btn btn-primary">Browse...</button>
     </div>
     <script>
-        function goToAnotherPage() {
-            window.location.href = "{{ url_for('get_another_page') }}";
+        function getRepos() {
+            fetch("/get-repo/test_repo")
+                .then(res => res.json()).then(data => {
+                console.log(data)
+            }).catch(err => console.log(err))
+
         }
     </script>
-  </body>
-</html>
+    </body>
+{% endblock %}

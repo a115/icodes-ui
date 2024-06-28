@@ -15,7 +15,7 @@ content %}
   <div class="listOfRepos d-flex flex-row m-3 gap-2"></div>
   <script>
     function getRepos() {
-      fetch("/list-repos")
+      fetch("/repos")
         .then((res) => res.json())
         .then((data) => {
           let repos = data;
@@ -29,7 +29,7 @@ content %}
                             <h5 class="card-title">Name: ${repo.name}</h5>
                             <p class="card-text">Remote URL${repo.remote_url}</p>
                             <p class="card-text">Description: ${repo.description}</p>
-                            <a href="/show-more-info/${repo.id}" class="btn btn-primary">Show more info</a>
+                            <a href="/repos/${repo.id}" class="btn btn-primary">Show more info</a>
                         </div>
                     </div>
                     `;

@@ -40,13 +40,13 @@ async def read_item(request: Request):
     return templates.TemplateResponse(request=request, name="home.html", context={})
 
 
-@app.get("/list-repos")
+@app.get("/repos")
 async def get_repos():
     result = list_repos(db, 5)
     return result
 
 
-@app.get("/show-more-info/{repo_id}", response_class=HTMLResponse)
+@app.get("/repos/{repo_id}", response_class=HTMLResponse)
 async def show_more_info(request: Request, repo_id: str):
     commits = list_commits(db=db, repo_id=repo_id, limit=5)
     repo_name = get_repo_name_by_id(db=db, repo_id=repo_id)

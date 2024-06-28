@@ -15,7 +15,7 @@ content %}
   <div class="listOfRepos d-flex flex-row m-3 gap-2"></div>
   <script>
     function getRepos() {
-      fetch("/get-repos")
+      fetch("/list-repos")
         .then((res) => res.json())
         .then((data) => {
           let repos = data;

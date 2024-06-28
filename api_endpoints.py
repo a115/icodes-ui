@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from icds.data import get_repo_by_name, get_db_commit_by_hash
+from icds.data import list_repos, list_commits, get_repo_name_by_id
 
 from db_engine import get_db_session
 
@@ -40,20 +40,21 @@ async def read_item(request: Request):
     return templates.TemplateResponse(request=request, name="home.html", context={})
 
 
-@app.get("/get-repos")
+@app.get("/list-repos")
 async def get_repos():
-    result = get_repo_by_name(db, "iCODES")
-    return [result]
+    result = list_repos(db, 5)
+    return result
 
 
 @app.get("/show-more-info/{repo_id}", response_class=HTMLResponse)
-async def get_another_page(request: Request):
-    commit = get_db_commit_by_hash(db, "1c1afa26098f1252018dc15ef7a0af09c6195a43")
+async def show_more_info(request: Request, repo_id: str):
+    commits = list_commits(db=db, repo_id=repo_id, limit=5)
+    repo_name = get_repo_name_by_id(db=db, repo_id=repo_id)
     return templates.TemplateResponse(
         request=request,
         name="repoInfo.html",
         context={
-            "repo_name": "some_repo_name",
-            "commits": [commit],
+            "repo_name": repo_name,
+            "commits": commits,
         },
     )

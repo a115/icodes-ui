@@ -1,0 +1,43 @@
+{% extends "base.html" %} {% block title %} Home page {% endblock %} {% block
+content %}
+<body>
+  <div class="d-flex flex-column align-items-center justify-content-center m-5">
+    <h1>Welcome to iCODES</h1>
+    <div>
+      <h3>List your repositories</h3>
+    </div>
+    <button onclick="getRepos()" type="button" class="btn btn-primary">
+      Browse...
+    </button>
+    </form>
+
+  </div>
+  <div class="listOfRepos d-flex flex-row m-3 gap-2"></div>
+  <script>
+    function getRepos() {
+      fetch("/repos")
+        .then((res) => res.json())
+        .then((data) => {
+          let repos = data;
+          let list = document.querySelector(".listOfRepos");
+          list.innerHTML = "";
+          repos.forEach((repo) => {
+            let div = document.createElement("div");
+            div.innerHTML = `
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Name: ${repo.name}</h5>
+                            <p class="card-text">Remote URL${repo.remote_url}</p>
+                            <p class="card-text">Description: ${repo.description}</p>
+                            <a href="/repos/${repo.id}" class="btn btn-primary">Show more info</a>
+                        </div>
+                    </div>
+                    `;
+            list.appendChild(div);
+          });
+        })
+        .catch((err) => console.log(err));
+    }
+  </script>
+</body>
+{% endblock %}

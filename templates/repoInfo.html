@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% block title %} Another page {% endblock %} {% block
+content %}
+<body>
+  <div class="d-flex flex-column align-items-center m-5">
+    <h1>Commit info for - {{repo_name}}</h1>
+    <table class="table">
+      <tr>
+        <th>Commit #</th>
+        <th>Datetime</th>
+        <th>Author</th>
+        <th>Message</th>
+        <th>Diff</th>
+        <th>Summary</th>
+        <th>Details</th>
+      </tr>
+      {% for commit in commits %}
+      <tr>
+        <td>{{commit.hash}}</td>
+        <td>{{commit.datetime}}</td>
+        <td>{{commit.author}}</td>
+        <td>{{commit.commit_message}}</td>
+        <td>{{commit.file_stats}}</td>
+        <td>{{commit.summary}}</td>
+        <td>
+          <p
+            class="mb-0"
+            data-bs-toggle="collapse"
+            href="#collapse{{loop.index}}"
+            role="button"
+            aria-expanded="false"
+            aria-controls="collapse{{loop.index}}"
+          >
+            {{commit.details[:100]}}...
+          </p>
+          <div class="collapse" id="collapse{{loop.index}}">
+            <div class="card card-body">{{commit.details}}</div>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+{% endblock %}
